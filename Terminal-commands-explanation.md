@@ -116,10 +116,13 @@ npx tsc src/index.ts
 
 ## Setting Up npm Scripts
 
-To streamline your development workflow, update the `scripts` section in `package.json`:
+To streamline your development workflow, update your `package.json`:
 
 ```json
 {
+  "name": "powerapps",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "npx tsc",
     "start": "node dist/index.js",
@@ -189,6 +192,7 @@ You can create additional scripts for convenience:
 
 ```json
 {
+  "type": "module",
   "scripts": {
     "dev": "npx tsc",
     "start": "node dist/index.js",
@@ -202,6 +206,99 @@ You can create additional scripts for convenience:
 - **`build`**: Same as `dev`, but semantically clearer for production builds
 - **`dev:watch`**: Auto-compile on file changes
 - **`dev:run`**: Compile and run in one command
+
+---
+
+## Project Configuration
+
+### ✅ Correct `package.json` Configuration
+
+Your `package.json` should include these key properties:
+
+```json
+{
+  "name": "powerapps",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+```
+
+**Important:**
+
+- ✅ `"type": "module"` - Required when using `"module": "nodenext"` in tsconfig.json
+- ✅ `"dev": "npx tsc"` - Compiles TypeScript files
+- ✅ `"start": "node dist/index.js"` - Runs the compiled output
+
+---
+
+### ✅ Correct `tsconfig.json` Configuration
+
+Your `tsconfig.json` should have these settings:
+
+```json
+{
+  "compilerOptions": {
+    // 📁 File Layout - CRITICAL SETTINGS
+    "rootDir": "./src", // ✅ TypeScript source files location
+    "outDir": "./dist", // ✅ Compiled JavaScript output location
+
+    // 🌐 Environment Settings
+    "module": "nodenext", // ES modules for Node.js
+    "target": "esnext", // Modern JavaScript output
+
+    // 📤 Other Outputs
+    "sourceMap": true, // Enable debugging with source maps
+    "declaration": true, // Generate .d.ts files
+
+    // ✅ Type Safety
+    "strict": true, // Enable all strict type-checking
+    "skipLibCheck": true
+  }
+}
+```
+
+**Key Settings Explained:**
+
+| Setting   | Value        | Purpose                                                      |
+| --------- | ------------ | ------------------------------------------------------------ |
+| `rootDir` | `"./src"`    | Where your TypeScript `.ts` files live                       |
+| `outDir`  | `"./dist"`   | Where compiled `.js` files are saved                         |
+| `module`  | `"nodenext"` | Use ES modules (requires `"type": "module"` in package.json) |
+| `target`  | `"esnext"`   | Output modern JavaScript                                     |
+
+---
+
+### 📂 Project Structure
+
+With this configuration, your project structure should be:
+
+```
+PowerApps/
+├── package.json          ← Has "type": "module" and scripts
+├── tsconfig.json         ← Has rootDir: "./src" and outDir: "./dist"
+├── node_modules/
+├── src/                  ← 📝 YOUR TYPESCRIPT CODE GOES HERE
+│   └── index.ts
+└── dist/                 ← 📦 COMPILED JAVASCRIPT (auto-generated)
+    ├── index.js
+    ├── index.d.ts
+    └── index.js.map
+```
+
+**Important:**
+
+- ✅ Write your code in `src/` folder
+- ✅ Compiled files will be in `dist/` folder
+- ⚠️ Never manually edit files in `dist/` - they're auto-generated!
 
 ---
 
