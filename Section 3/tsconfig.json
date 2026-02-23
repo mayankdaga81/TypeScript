@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    // 📁 File Layout - CRITICAL SETTINGS
+    "rootDir": "./src", // ✅ TypeScript source files location
+    "outDir": "./dist", // ✅ Compiled JavaScript output location
+
+    // 🌐 Environment Settings
+    "module": "nodenext", // ES modules for Node.js
+    "target": "esnext", // Modern JavaScript output
+
+    // 📤 Other Outputs
+    "sourceMap": true, // Enable debugging with source maps
+    "declaration": true, // Generate .d.ts files
+
+    // ✅ Type Safety
+    "strict": true, // Enable all strict type-checking
+    "skipLibCheck": true
+  }
+}
